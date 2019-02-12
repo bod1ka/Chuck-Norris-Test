@@ -47,14 +47,18 @@ serviceWorker.unregister();
 
 
 function restoreInitialStoreState(){
-    let initialState = {};
+    let initialState = {
+        auth:{
+            isAuthenticated: window.sessionStorage.getItem('isAuthenticated') === 'true'
+        }
+    };
 
     let savedState = window.sessionStorage.getItem('state');
 
     if (savedState){
         try {
             savedState = JSON.parse(savedState);
-            initialState = savedState;
+            initialState = {...initialState,savedState};
         }catch(e){
             console.error(e);
         }
