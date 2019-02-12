@@ -87,6 +87,14 @@ class FavouriteJokesListContainer extends Component {
         clearInterval(this.state.timer);
     }
 
+    clearErrors() {
+        if (this.state.errors.length) {
+            this.setState({
+                errors: []
+            });
+        }
+    }
+
     render() {
 
         const {
@@ -124,26 +132,30 @@ class FavouriteJokesListContainer extends Component {
                         </button>
                     }
                 </div>
-                <ul className="list">
-                    {
-                        items.length > 0 && items.map(({id, joke}) => {
-                            return <li className="list__item" key={id}>
-                                <div dangerouslySetInnerHTML={{
-                                    '__html': joke
-                                }}>
-                                </div>
-                                <div className="list-item__actions">
-                                    <button className="button button--icon-only" title="Remove from favourites"
-                                            onClick={() => {
-                                                this.onRemoveFromFavourites(id);
-                                            }}>
-                                        <i className="fas fa-trash-alt"></i>
-                                    </button>
-                                </div>
-                            </li>
-                        })
-                    }
-                </ul>
+                {
+                    items.length > 0 ? <ul className="list">
+                        {
+                            items.map(({id, joke}) => {
+                                return <li className="list__item" key={id}>
+                                    <div dangerouslySetInnerHTML={{
+                                        '__html': joke
+                                    }}>
+                                    </div>
+                                    <div className="list-item__actions">
+                                        <button className="button button--icon-only" title="Remove from favourites"
+                                                onClick={() => {
+                                                    this.onRemoveFromFavourites(id);
+                                                }}>
+                                            <i className="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                </li>
+                            })
+                        }
+                    </ul>
+                        :
+                        "You don't have favourite jokes yet"
+                }
             </div>
         );
     }
