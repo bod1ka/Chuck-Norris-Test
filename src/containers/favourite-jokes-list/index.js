@@ -14,7 +14,8 @@ class FavouriteJokesListContainer extends Component {
         super(props);
 
         this.state = {
-            timer: undefined
+            timer: undefined,
+            errors:[]
         };
 
         this.onRemoveFromFavourites = this.onRemoveFromFavourites.bind(this);
@@ -43,7 +44,24 @@ class FavouriteJokesListContainer extends Component {
                     this.stopPolling();
                     return;
                 }
-                this.props.dispatch(getFavouriteJokes());
+                this.props.dispatch(getFavouriteJokes())
+                    .then(() => {
+                        this.clearErrors();
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                        this.setState({
+                            errors:[`Can't fetch jokes`]
+                        });
+
+                        setTimeout(() => {
+                            this.setState(() => {
+                                return {
+                                    errors:[]
+                                }
+                            });
+                        },1000);
+                    });
             },POLLING_INTERVAL)
         })
     }
@@ -76,11 +94,24 @@ class FavouriteJokesListContainer extends Component {
         } = this.props;
 
         const {
-            timer
+            timer,
+            errors
         } = this.state;
 
         return (
             <div className="jokes-list col-12">
+                { errors.length > 0 && <div className="row justify-content-center">
+                    <div className="col-6">
+                        <div className="error-box">
+                            {
+                                errors.map((message,index) => {
+                                    return <h4 key={index}>{message}</h4>
+                                })
+                            }
+                        </div>
+                    </div>
+                </div>
+                }
                 <div className="row justify-content-center">
                     <button className="button" onClick={this.onShowRandom}>
                         Let's see some random jokes

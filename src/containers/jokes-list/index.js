@@ -12,6 +12,10 @@ class JokesListContainer extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            errors:[]
+        };
+
         this.onFetchJokes = this.onFetchJokes.bind(this);
         this.onRemoveFromFavourites = this.onRemoveFromFavourites.bind(this);
         this.onAddToFavouriteList = this.onAddToFavouriteList.bind(this);
@@ -33,7 +37,24 @@ class JokesListContainer extends Component {
         if (this.props.isFetching){
             return;
         }
-        this.props.dispatch(getRandomJokes());
+        this.props.dispatch(getRandomJokes())
+            .then(() => {
+                this.clearErrors();
+            })
+            .catch((error) => {
+                console.error(error);
+                this.setState({
+                    errors:[`Can't fetch jokes`]
+                });
+
+                setTimeout(() => {
+                    this.setState(() => {
+                        return {
+                            errors:[]
+                        }
+                    });
+                },5000);
+            });
     }
 
     onAddToFavouriteList(joke){
@@ -44,7 +65,19 @@ class JokesListContainer extends Component {
         this.props.dispatch(removeFavourite(joke.id));
     }
 
+    clearErrors(){
+        if (this.state.errors.length){
+            this.setState({
+                errors:[]
+            });
+        }
+    }
+
     render() {
+
+        const {
+            errors
+        } = this.state;
 
         const {
             items,
@@ -53,6 +86,18 @@ class JokesListContainer extends Component {
 
         return (
             <div className="jokes-list col-12">
+                { errors.length > 0 && <div className="row mb-2 justify-content-center">
+                    <div className="col-6">
+                        <div className="error-box">
+                            {
+                                errors.map((message,index) => {
+                                    return <h4 key={index}>{message}</h4>
+                                })
+                            }
+                        </div>
+                    </div>
+                </div>
+                }
                 <div className="row justify-content-center">
                     <button className="button" onClick={this.onShowFavourites}>
                         Show me my favourites!

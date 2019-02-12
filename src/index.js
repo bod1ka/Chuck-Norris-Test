@@ -84,6 +84,7 @@ function trackStoreState(store){
         window.sessionStorage.setItem('state', JSON.stringify({
             jokes:{
                 isFetching:false,
+                errors:[],
                 jokes:[],
                 favouriteJokes:jokes.favouriteJokes
             }

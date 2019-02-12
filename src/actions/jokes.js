@@ -40,11 +40,12 @@ export function getFavouriteJokes(){
                     jokes
                 });
             })
-            .catch(err => {
+            .catch((err) => {
                 console.error(err);
                 dispatch({
                     type: FETCH_FAVOURITE_FAIL
                 });
+                throw err;
             });
     }
 }
@@ -63,11 +64,12 @@ export function getRandomJokes(number = 10){
                     jokes
                 });
             })
-            .catch(err => {
+            .catch((err) => {
                 console.error(err);
                 dispatch({
                     type: FETCH_JOKES_FAIL
                 });
+                throw err;
             });
     }
 }
