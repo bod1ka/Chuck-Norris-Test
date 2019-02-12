@@ -1,11 +1,13 @@
-import React, { Fragment, Component } from 'react';
+import React, { Fragment, PureComponent } from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
+
 import { validatePassword } from '../util';
 import './login.css'
 
 const modalRoot = document.querySelector('#modal-root');
 
-export class LoginForm extends Component {
+export class LoginForm extends PureComponent {
 
     constructor(props) {
         super(props);
@@ -133,3 +135,7 @@ export class LoginForm extends Component {
         );
     }
 }
+
+LoginForm.propTypes = {
+    onSubmit: PropTypes.func.isRequired
+};

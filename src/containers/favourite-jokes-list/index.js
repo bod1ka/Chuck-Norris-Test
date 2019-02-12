@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 
@@ -8,7 +8,7 @@ import { MAX_JOKES } from "../../constants";
 
 const POLLING_INTERVAL = 1000 * 5;
 
-class FavouriteJokesListContainer extends Component {
+class FavouriteJokesListContainer extends PureComponent {
 
     constructor(props) {
         super(props);

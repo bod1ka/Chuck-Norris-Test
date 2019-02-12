@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -7,7 +7,7 @@ import { addFavourite, getRandomJokes, removeFavourite } from "../../actions";
 import { jokesSelector } from "../../selectors";
 
 
-class JokesListContainer extends Component {
+class JokesListContainer extends PureComponent {
 
     constructor(props) {
         super(props);
