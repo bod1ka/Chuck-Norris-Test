@@ -4,7 +4,7 @@ import logo from './images/logo.jpg'
 import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import {authenticate, logout} from "./actions/auth";
-
+import { LoginForm } from './components';
 
 class App extends React.Component{
 
@@ -30,27 +30,13 @@ class App extends React.Component{
 
   render(){
 
-
     const {
       children,
       isAuthenticated
     } = this.props;
 
     if (!isAuthenticated){
-      return <div className='container'>
-        <div className="row justify-content-center">
-          <div className="col-6">
-            <form onSubmit={this.onLoginSubmit}>
-              <label htmlFor="">Login</label>
-              <input className="form__input" type="text" onChange={this.onChangeInput}/>
-              <label htmlFor="">Password</label>
-              <input className="form__input" type="password" onChange={this.onChangeInput}/>
-
-              <button className="button" type="submit">Login</button>
-            </form>
-          </div>
-        </div>
-      </div>
+      return <LoginForm/>;
     }
 
     return (
