@@ -36,7 +36,7 @@ class App extends React.Component{
     } = this.props;
 
     if (!isAuthenticated){
-      return <LoginForm/>;
+      return <LoginForm onSubmit={this.onLoginSubmit}/>;
     }
 
     return (

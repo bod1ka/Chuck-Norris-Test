@@ -1,4 +1,4 @@
-import {React, Fragment, Component}from 'react';
+import React, {Fragment, Component} from 'react';
 import ReactDOM from 'react-dom';
 import { validatePassword } from '../util';
 
