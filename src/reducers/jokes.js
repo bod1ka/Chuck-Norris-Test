@@ -18,30 +18,24 @@ export default function jokesReducer(state = initialState, action) {
 
     switch (action.type) {
         case ADD_FAVOURITE_JOKE:
-
-            const favouriteItems = state.favouriteJokes;
-
-            if (favouriteItems.length >= MAX_JOKES) {
-                return state;
-            }
-
             return {
                 ...state,
-                favouriteJokes: [...favouriteItems, action.joke].slice(0,10)
+                favouriteJokes: [...state.favouriteJokes, action.joke]
             };
         case REMOVE_FAVOURITE_JOKE:
-
             return {
                 ...state,
                 favouriteJokes: state.favouriteJokes.filter(({id}) => {
                     return action.id !== id;
                 })
             };
+        case FETCH_FAVOURITE_START:
         case FETCH_JOKES_START:
             return {
                 ...state,
                 isFetching: true
             };
+        case FETCH_FAVOURITE_FAIL:
         case FETCH_JOKES_FAIL:
             return {
                 ...state,
@@ -53,28 +47,11 @@ export default function jokesReducer(state = initialState, action) {
                 isFetching: false,
                 jokes: action.jokes
             };
-        case FETCH_FAVOURITE_START:
-            return {
-                ...state,
-                isFetching: true
-            };
-        case FETCH_FAVOURITE_FAIL:
-            return {
-                ...state,
-                isFetching: false
-            };
         case FETCH_FAVOURITE_SUCCESS:
-
-            const favouriteJokes = state.favouriteJokes;
-
-            if (favouriteJokes.length >= MAX_JOKES) {
-                return state;
-            }
-
             return {
                 ...state,
                 isFetching: false,
-                favouriteJokes: [...favouriteJokes, ...action.jokes].slice(0,10)
+                favouriteJokes: [...state.favouriteJokes, ...action.jokes].slice(0,MAX_JOKES)
             };
         default:
             return state;

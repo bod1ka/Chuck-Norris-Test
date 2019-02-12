@@ -5,16 +5,27 @@ import {
     FETCH_JOKES_FAIL,
     FETCH_JOKES_START,
     FETCH_JOKES_SUCCESS,
-    GET_JOKES_ENDPOINT,
+    GET_JOKES_ENDPOINT, MAX_JOKES,
     REMOVE_FAVOURITE_JOKE
 } from "../constants";
 
 import { checkStatus } from "../util";
 
 export function addFavourite(joke) {
-    return {
-        type: ADD_FAVOURITE_JOKE,
-        joke
+    return (dispatch, getState) => {
+
+        const {
+            jokes
+        } = getState();
+
+        if (jokes.favouriteJokes.length >= MAX_JOKES){
+            return;
+        }
+
+        dispatch({
+            type: ADD_FAVOURITE_JOKE,
+            joke
+        });
     };
 }
 
@@ -26,12 +37,19 @@ export function removeFavourite(id) {
 }
 
 export function getFavouriteJokes() {
-    return (dispatch) => {
+    return (dispatch,getState) => {
+
+        const {
+            jokes
+        } = getState();
+
+        if (jokes.favouriteJokes.length >= MAX_JOKES){
+            return Promise.resolve();
+        }
 
         dispatch({
             type: FETCH_FAVOURITE_START
         });
-
 
         return fetchRandomJokes(1)
             .then((jokes) => {

@@ -32,31 +32,6 @@ describe('jokes reducer', function () {
         ]);
     });
 
-    it('should not add on joke ADD_FAVOURITE_JOKE', () => {
-
-        const jokesFixture = getJokes(10);
-
-        const initialState = {
-            isFetching: false,
-            jokes: [
-                {
-                    id: 1,
-                    joke: 'test'
-                }
-            ],
-            favouriteJokes: jokesFixture
-        };
-        const state = jokes(initialState, {
-            type: ADD_FAVOURITE_JOKE,
-            joke: {
-                id: 11,
-                joke: 'test'
-            }
-        });
-
-        expect(state.favouriteJokes).toEqual(jokesFixture);
-    });
-
     it('should remove item on REMOVE_FAVOURITE action', () => {
         const initialState = {
             isFetching: false,
@@ -106,16 +81,3 @@ describe('jokes reducer', function () {
         expect(state.favouriteJokes).toEqual(expected);
     });
 });
-
-function getJokes(n) {
-    const jokes = [];
-
-    for (let i = 0; i < n; i++) {
-        jokes.push({
-            id: i + 1,
-            joke: 'test'
-        });
-    }
-
-    return jokes;
-}
