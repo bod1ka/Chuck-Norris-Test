@@ -22,9 +22,7 @@ export default function jokesReducer(state = initialState, action){
             const favouriteItems = state.favouriteJokes;
 
             if (favouriteItems.length >= MAX_JOKES){
-                return {
-                    ...state
-                };
+                return state;
             }
 
             return {
@@ -70,7 +68,7 @@ export default function jokesReducer(state = initialState, action){
             const favouriteJokes = state.favouriteJokes;
 
             if (favouriteJokes.length >= MAX_JOKES){
-                return;
+                return state;
             }
 
             return {
