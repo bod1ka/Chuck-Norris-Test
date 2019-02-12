@@ -38,12 +38,24 @@ export class LoginForm extends Component{
     }
 
     onSubmit(event){
-
         event.preventDefault();
-        const {
+
+        let {
             login,
             password
         } = this.state;
+
+        login = login.trim();
+        password = password.trim();
+
+        if (!login || !password){
+            this.setState({
+                errors:[
+                    'Please enter password and login'
+                ]
+            });
+            return;
+        }
 
         const {isValid,errors} = validatePassword(password);
 
@@ -81,6 +93,7 @@ export class LoginForm extends Component{
                                             <input className="login-form__input "
                                                    name="login"
                                                    type="text"
+                                                   required
                                                    onChange={this.onChangeInput}/>
                                         </div>
                                     </div>
@@ -92,8 +105,8 @@ export class LoginForm extends Component{
                                             <input className="login-form__input"
                                                    name="password"
                                                    type="password"
+                                                   required
                                                    onChange={this.onChangeInput}/>
-
                                         </div>
                                     </div>
                                 </div>

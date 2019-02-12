@@ -31,9 +31,9 @@ ReactDOM.render(
                     <Switch>
                         <Route exact path="/" component={JokesListContainer} />
                         <Route path="/favourite" component={FavouriteJokesListContainer} />
+                        <Route component={NotFound} />
                     </Switch>
                 </App>
-                <Route component={NotFound} />
             </Switch>
         </Router>
     </Provider>,

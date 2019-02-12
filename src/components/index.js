@@ -8,9 +8,9 @@ export {
 };
 
 function NotFound(){
-    return (<div>
-        <h1>
-            Page Not Found
-        </h1>
+    return (<div className="row justify-content-center">
+            <h1>
+                404, try find jokes in another place
+            </h1>
     </div>)
 }
