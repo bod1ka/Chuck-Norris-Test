@@ -45,8 +45,8 @@ export class LoginForm extends Component {
             password
         } = this.state;
 
-        login = login.trim();
-        password = password.trim();
+        login = (login || '').trim();
+        password = (password || '').trim();
 
         if (!login || !password) {
             this.setState({
