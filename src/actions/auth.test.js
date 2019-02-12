@@ -8,6 +8,7 @@ const mockStore = configureStore(middlewares);
 
 describe('#authenticate',() => {
    it ('should authenticate user',() =>{
+
        const store = mockStore({
            auth:{
                isAuthenticated: false

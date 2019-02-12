@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
+import jokes from './jokes';
 import auth from './auth';
 
 
 const createReducer = () => {
-    const reducer = combineReducers({
+    const reducer =  combineReducers({
+        jokes,
         auth
     });
     return (state, action) => {
