@@ -5,6 +5,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "5.7.1",
     "bootstrap-4-grid": "2.4.1",
+    "jest-fetch-mock": "^2.1.0",
     "prop-types": "15.7.1",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
