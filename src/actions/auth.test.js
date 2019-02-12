@@ -1,6 +1,7 @@
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import {authenticate, logout} from "./auth";
+import history from '../history';
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
@@ -8,6 +9,9 @@ const mockStore = configureStore(middlewares);
 
 describe('#authenticate',() => {
    it ('should authenticate user',() =>{
+
+       jest.spyOn(window.sessionStorage.__proto__, 'setItem');
+       window.sessionStorage.__proto__.setItem = jest.fn();
 
        const store = mockStore({
            auth:{
@@ -21,7 +25,7 @@ describe('#authenticate',() => {
        const expected = {type:'AUTH_SUCCESSFUL'};
 
        expect(actions).toEqual([expected]);
-
+       expect(window.sessionStorage.setItem).toHaveBeenCalledWith('isAuthenticated','true');
    });
 });
 
@@ -33,11 +37,14 @@ describe('#logout',() => {
             }
         });
 
+        jest.spyOn(history,'push');
+
         store.dispatch((logout()));
 
         const actions = store.getActions();
         const expected = {type:'AUTH_LOGOUT'};
 
         expect(actions).toEqual([expected]);
+        expect(history.push).toHaveBeenCalledWith('/');
     });
 });

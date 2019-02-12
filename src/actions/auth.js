@@ -5,6 +5,8 @@ export function authenticate({login,password}){
         dispatch({
             type:'AUTH_SUCCESSFUL'
         });
+        window.sessionStorage.setItem('isAuthenticated','true');
+
     };
 }
 
@@ -13,6 +15,7 @@ export function logout(){
         dispatch({
             type:'AUTH_LOGOUT'
         });
+        window.sessionStorage.removeItem('isAuthenticated');
         history.push('/');
     }
 }
