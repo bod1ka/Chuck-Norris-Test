@@ -1,4 +1,5 @@
 import {createSelector} from "reselect";
+import {MAX_JOKES} from "../constants";
 
 const jokesSelector = createSelector(
     (state) => state.jokes.jokes,
@@ -16,7 +17,7 @@ const jokesSelector = createSelector(
                 id,
                 joke,
                 isFavourite,
-                canBeFavoured: favouriteJokesLength < 10 && !isFavourite
+                canBeFavoured: favouriteJokesLength < MAX_JOKES && !isFavourite
             }
         });
     });

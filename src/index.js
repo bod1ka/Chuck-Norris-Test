@@ -12,7 +12,7 @@ import {Provider} from "react-redux";
 import {Route, BrowserRouter as Router, Switch} from "react-router-dom";
 
 import {NotFound} from "./components";
-import {JokesListContainer} from "./containers";
+import {JokesListContainer, FavouriteJokesListContainer} from "./containers";
 import App from "./App";
 
 
@@ -29,6 +29,7 @@ ReactDOM.render(
                 <App>
                     <Switch>
                         <Route exact path="/" component={JokesListContainer} />
+                        <Route path="/favourite" component={FavouriteJokesListContainer} />
                     </Switch>
                 </App>
                 <Route component={NotFound} />
