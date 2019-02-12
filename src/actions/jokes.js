@@ -1,6 +1,6 @@
 import {
     ADD_FAVOURITE_JOKE,
-    FETCH_FAVOURITE_FAIL,
+    FETCH_FAVOURITE_FAIL, FETCH_FAVOURITE_START,
     FETCH_FAVOURITE_SUCCESS,
     FETCH_JOKES_FAIL,
     FETCH_JOKES_START,
@@ -27,6 +27,12 @@ export function removeFavourite(id){
 
 export function getFavouriteJokes(){
     return (dispatch) => {
+
+        dispatch({
+            type: FETCH_FAVOURITE_START
+        });
+
+
         return fetchRandomJokes(1)
             .then((jokes) => {
                 dispatch({
