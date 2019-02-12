@@ -118,7 +118,7 @@ export class LoginForm extends PureComponent {
                                 </div>
                             </form>
                         </div>
-                        {errors && <div className="row justify-content-center">
+                        {errors.length > 0 && <div className="row justify-content-center">
                             <div className="login-form__errors">
                                 {
                                     errors.map((error, key) => {
