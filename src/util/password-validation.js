@@ -45,15 +45,27 @@ export function validatePassword(password) {
 
 }
 
+const characterMap = 'abcdefghijklmnopqrstuvwxyz'.split('').reduce((acc,letter,index) => {
+    acc[letter] = index+1;
+    return acc;
+},{});
+
 export function hasThreeSequentialLetters(string) {
-    let flag = false;
-    for (let i = 0; i < string.length - 2 && !flag; i++) {
-        const currentCharCode = string.charCodeAt(i);
-        const nextCharCode = string.charCodeAt(i + 1);
-        const nextNextCharCode = string.charCodeAt(i + 2);
-        flag = (currentCharCode + 1) === nextCharCode &&
-            (nextCharCode + 1) === nextNextCharCode;
+
+    if (string.length < 4){
+        return false;
     }
+
+    let flag = false;
+
+    for (let i = 0; i < string.length - 2 && !flag; i++) {
+        const currentCharPosition = characterMap[string[i]];
+        const nextCharPosition = characterMap[string[i + 1]];
+        const nextNextCharPosition = characterMap[string[i + 2]];
+        flag = (currentCharPosition + 1) === nextCharPosition &&
+            (nextCharPosition + 1) === nextNextCharPosition;
+    }
+
     return flag;
 }
 

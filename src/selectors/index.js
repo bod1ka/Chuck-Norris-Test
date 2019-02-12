@@ -11,7 +11,7 @@ const jokesSelector = createSelector(
         const favouriteJokesLength = Object.keys(favouriteJokeIds).length;
         return randomJokes.map(({id, joke}) => {
 
-            const isFavourite = !!favouriteJokeIds[id];
+            const isFavourite = Boolean(favouriteJokeIds[id]);
 
             return {
                 id,
