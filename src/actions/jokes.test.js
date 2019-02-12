@@ -68,7 +68,7 @@ describe('#getRandomJokes',() => {
 
 
         return store.dispatch((getRandomJokes()))
-            .then(() => {
+            .catch(() => {
                 const actions = store.getActions();
                 const expected = [
                     {type:FETCH_JOKES_START},
@@ -135,7 +135,7 @@ describe('#getFavouriteJokes',() => {
 
 
         return store.dispatch((getFavouriteJokes()))
-            .then(() => {
+            .catch(() => {
                 const actions = store.getActions();
                 const expected = [
                     {type:FETCH_FAVOURITE_START},

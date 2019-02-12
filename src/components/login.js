@@ -1,6 +1,7 @@
 import React, {Fragment, Component} from 'react';
 import ReactDOM from 'react-dom';
 import { validatePassword } from '../util';
+import './login.css'
 
 const modalRoot = document.querySelector('#modal-root');
 
@@ -11,10 +12,14 @@ export class LoginForm extends Component{
 
         this.state = {
             login: '',
-            password: ''
+            password: '',
+            errors:[]
         };
 
-        this.el = document.createElement('div');
+        const el = document.createElement('div');
+        el.classList.add('container-fluid');
+
+        this.el = el;
 
         this.onSubmit = this.onSubmit.bind(this);
         this.onChangeInput = this.onChangeInput.bind(this);
@@ -22,38 +27,92 @@ export class LoginForm extends Component{
 
     componentDidMount() {
         modalRoot.appendChild(this.el);
-
     }
 
     componentWillUnmount() {
         modalRoot.removeChild(this.el);
     }
 
-
     onChangeInput(event){
-
+        this.setState({[event.target.name]: event.target.value});
     }
 
-    onSubmit(){
-        validatePassword(this.state.password);
-        this.props.onSubmit();
+    onSubmit(event){
+
+        event.preventDefault();
+        const {
+            login,
+            password
+        } = this.state;
+
+        const {isValid,errors} = validatePassword(password);
+
+        if (!isValid){
+            this.setState({
+                errors
+            });
+            return;
+        }
+
+        this.setState({
+            errors:[]
+        });
+
+        this.props.onSubmit({login,password});
     }
 
     render() {
+
+        const {
+            errors
+        } = this.state;
+
         return ReactDOM.createPortal(
             <Fragment>
-                <div className='container'>
-                    <div className="row justify-content-center">
-                        <div className="col-6">
-                            <form onSubmit={this.onSubmit}>
-                                <label htmlFor="">Login</label>
-                                <input className="form__input" type="text" onChange={this.onChangeInput}/>
-                                <label htmlFor="">Password</label>
-                                <input className="form__input" type="password" onChange={this.onChangeInput}/>
+                <div className="row justify-content-center mt-5">
+                    <div className="login-form-container">
+                        <div className="row justify-content-center">
+                            <form className="login-form" onSubmit={this.onSubmit}>
+                                <h2>Please log in</h2>
+                                <div className="row">
+                                    <div className="col-12">
+                                        <div className="form__input-group">
+                                            <label htmlFor="">Login</label><br/>
+                                            <input className="login-form__input "
+                                                   name="login"
+                                                   type="text"
+                                                   onChange={this.onChangeInput}/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-12">
+                                        <div className="form__input-group">
+                                            <label htmlFor="">Password</label>
+                                            <input className="login-form__input"
+                                                   name="password"
+                                                   type="password"
+                                                   onChange={this.onChangeInput}/>
 
-                                <button className="button" type="submit">Login</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="row mt-3 justify-content-center">
+                                    <button className="button" type="submit">Login</button>
+                                </div>
                             </form>
                         </div>
+                        {errors && <div className="row justify-content-center">
+                            <div className="login-form__errors">
+                                {
+                                    errors.map((error, key) => {
+                                        return <p key={key}>{error}</p>
+                                    })
+                                }
+                            </div>
+                        </div>
+                        }
                     </div>
                 </div>
             </Fragment>,

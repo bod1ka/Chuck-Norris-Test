@@ -57,8 +57,8 @@ class JokesListContainer extends Component {
             });
     }
 
-    onAddToFavouriteList(joke){
-        this.props.dispatch(addFavourite(joke));
+    onAddToFavouriteList({id,joke}){
+        this.props.dispatch(addFavourite({id,joke}));
     }
 
     onRemoveFromFavourites(joke){

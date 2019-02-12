@@ -9,7 +9,7 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import configureStore from "./store";
 import {Provider} from "react-redux";
-import {Route, BrowserRouter as Router, Switch} from "react-router-dom";
+import {Route, Router, Switch} from "react-router-dom";
 import history from './history';
 
 import {NotFound} from "./components";
@@ -59,7 +59,7 @@ function restoreInitialStoreState(){
     if (savedState){
         try {
             savedState = JSON.parse(savedState);
-            initialState = {...initialState,savedState};
+            initialState = {...initialState, ...savedState};
         }catch(e){
             console.error(e);
         }
