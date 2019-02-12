@@ -1,11 +1,13 @@
+import { AUTH_LOGOUT, AUTH_SUCCESSFUL } from '../constants';
+
 export default function authReducer(state = {isAuthenticated: false}, action) {
     switch (action.type) {
-        case 'AUTH_SUCCESSFUL':
+        case AUTH_SUCCESSFUL:
             return {
                 ...state,
                 isAuthenticated: true
             };
-        case 'AUTH_LOGOUT':
+        case AUTH_LOGOUT:
             return {
                 ...state,
                 isAuthenticated: false
