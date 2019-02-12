@@ -4,7 +4,7 @@ import auth from './auth';
 
 
 const createReducer = () => {
-    const reducer =  combineReducers({
+    const reducer = combineReducers({
         jokes,
         auth
     });

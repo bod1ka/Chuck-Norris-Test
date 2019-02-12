@@ -1,19 +1,19 @@
-import React, {Fragment, Component} from 'react';
+import React, { Fragment, Component } from 'react';
 import ReactDOM from 'react-dom';
 import { validatePassword } from '../util';
 import './login.css'
 
 const modalRoot = document.querySelector('#modal-root');
 
-export class LoginForm extends Component{
+export class LoginForm extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
             login: '',
             password: '',
-            errors:[]
+            errors: []
         };
 
         const el = document.createElement('div');
@@ -33,11 +33,11 @@ export class LoginForm extends Component{
         modalRoot.removeChild(this.el);
     }
 
-    onChangeInput(event){
+    onChangeInput(event) {
         this.setState({[event.target.name]: event.target.value});
     }
 
-    onSubmit(event){
+    onSubmit(event) {
         event.preventDefault();
 
         let {
@@ -48,18 +48,18 @@ export class LoginForm extends Component{
         login = login.trim();
         password = password.trim();
 
-        if (!login || !password){
+        if (!login || !password) {
             this.setState({
-                errors:[
+                errors: [
                     'Please enter password and login'
                 ]
             });
             return;
         }
 
-        const {isValid,errors} = validatePassword(password);
+        const {isValid, errors} = validatePassword(password);
 
-        if (!isValid){
+        if (!isValid) {
             this.setState({
                 errors
             });
@@ -67,10 +67,10 @@ export class LoginForm extends Component{
         }
 
         this.setState({
-            errors:[]
+            errors: []
         });
 
-        this.props.onSubmit({login,password});
+        this.props.onSubmit({login, password});
     }
 
     render() {

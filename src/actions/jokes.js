@@ -9,23 +9,23 @@ import {
     REMOVE_FAVOURITE_JOKE
 } from "../constants";
 
-import {checkStatus} from "../util";
+import { checkStatus } from "../util";
 
-export function addFavourite(joke){
+export function addFavourite(joke) {
     return {
-        type:ADD_FAVOURITE_JOKE,
+        type: ADD_FAVOURITE_JOKE,
         joke
     };
 }
 
-export function removeFavourite(id){
+export function removeFavourite(id) {
     return {
-        type:REMOVE_FAVOURITE_JOKE,
+        type: REMOVE_FAVOURITE_JOKE,
         id
     };
 }
 
-export function getFavouriteJokes(){
+export function getFavouriteJokes() {
     return (dispatch) => {
 
         dispatch({
@@ -50,7 +50,7 @@ export function getFavouriteJokes(){
     }
 }
 
-export function getRandomJokes(number = 10){
+export function getRandomJokes(number = 10) {
     return (dispatch) => {
 
         dispatch({
@@ -74,12 +74,12 @@ export function getRandomJokes(number = 10){
     }
 }
 
-function fetchRandomJokes(n){
+function fetchRandomJokes(n) {
     return fetch(`${GET_JOKES_ENDPOINT}/${n}`)
         .then(checkStatus)
         .then(response => response.json())
         .then((data) => {
-            const jokes = data.value.map(({id,joke}) => {
+            const jokes = data.value.map(({id, joke}) => {
                 return {
                     id,
                     joke

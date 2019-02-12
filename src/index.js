@@ -8,12 +8,12 @@ import './index.css';
 
 import * as serviceWorker from './serviceWorker';
 import configureStore from "./store";
-import {Provider} from "react-redux";
-import {Route, Router, Switch} from "react-router-dom";
+import { Provider } from "react-redux";
+import { Route, Router, Switch } from "react-router-dom";
 import history from './history';
 
-import {NotFound} from "./components";
-import {JokesListContainer, FavouriteJokesListContainer} from "./containers";
+import { NotFound } from "./components";
+import { JokesListContainer, FavouriteJokesListContainer } from "./containers";
 import App from "./App";
 
 
@@ -29,9 +29,9 @@ ReactDOM.render(
             <Switch>
                 <App>
                     <Switch>
-                        <Route exact path="/" component={JokesListContainer} />
-                        <Route path="/favourite" component={FavouriteJokesListContainer} />
-                        <Route component={NotFound} />
+                        <Route exact path="/" component={JokesListContainer}/>
+                        <Route path="/favourite" component={FavouriteJokesListContainer}/>
+                        <Route component={NotFound}/>
                     </Switch>
                 </App>
             </Switch>
@@ -47,46 +47,46 @@ ReactDOM.render(
 serviceWorker.unregister();
 
 
-function restoreInitialStoreState(){
+function restoreInitialStoreState() {
     let initialState = {
-        auth:{
+        auth: {
             isAuthenticated: window.sessionStorage.getItem('isAuthenticated') === 'true'
         }
     };
 
     let savedState = window.sessionStorage.getItem('state');
 
-    if (savedState){
+    if (savedState) {
         try {
             savedState = JSON.parse(savedState);
             initialState = {...initialState, ...savedState};
-        }catch(e){
+        } catch (e) {
             console.error(e);
         }
     }
     return initialState;
 }
 
-function trackStoreState(store){
+function trackStoreState(store) {
     let previousState;
 
-    store.subscribe(()=>{
+    store.subscribe(() => {
         const {
             jokes
         } = store.getState();
 
-        if (previousState === jokes){
+        if (previousState === jokes) {
             return;
         }
 
         previousState = jokes;
 
         window.sessionStorage.setItem('state', JSON.stringify({
-            jokes:{
-                isFetching:false,
-                errors:[],
-                jokes:[],
-                favouriteJokes:jokes.favouriteJokes
+            jokes: {
+                isFetching: false,
+                errors: [],
+                jokes: [],
+                favouriteJokes: jokes.favouriteJokes
             }
         }));
     });

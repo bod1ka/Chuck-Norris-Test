@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {connect} from "react-redux";
-import {withRouter} from "react-router-dom";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
-import {addFavourite, getRandomJokes, removeFavourite} from "../../actions";
-import {jokesSelector} from "../../selectors";
+import { addFavourite, getRandomJokes, removeFavourite } from "../../actions";
+import { jokesSelector } from "../../selectors";
 
 
 class JokesListContainer extends Component {
@@ -13,7 +13,7 @@ class JokesListContainer extends Component {
         super(props);
 
         this.state = {
-            errors:[]
+            errors: []
         };
 
         this.onFetchJokes = this.onFetchJokes.bind(this);
@@ -23,18 +23,18 @@ class JokesListContainer extends Component {
     }
 
     componentDidMount() {
-        if (this.props.isFetching || this.props.items.length){
+        if (this.props.isFetching || this.props.items.length) {
             return;
         }
         this.props.dispatch(getRandomJokes());
     }
 
-    onShowFavourites(){
+    onShowFavourites() {
         this.props.history.push('/favourite');
     }
 
-    onFetchJokes(){
-        if (this.props.isFetching){
+    onFetchJokes() {
+        if (this.props.isFetching) {
             return;
         }
         this.props.dispatch(getRandomJokes())
@@ -44,31 +44,31 @@ class JokesListContainer extends Component {
             .catch((error) => {
                 console.error(error);
                 this.setState({
-                    errors:[`Can't fetch jokes`]
+                    errors: [`Can't fetch jokes`]
                 });
 
                 setTimeout(() => {
                     this.setState(() => {
                         return {
-                            errors:[]
+                            errors: []
                         }
                     });
-                },5000);
+                }, 5000);
             });
     }
 
-    onAddToFavouriteList({id,joke}){
-        this.props.dispatch(addFavourite({id,joke}));
+    onAddToFavouriteList({id, joke}) {
+        this.props.dispatch(addFavourite({id, joke}));
     }
 
-    onRemoveFromFavourites(joke){
+    onRemoveFromFavourites(joke) {
         this.props.dispatch(removeFavourite(joke.id));
     }
 
-    clearErrors(){
-        if (this.state.errors.length){
+    clearErrors() {
+        if (this.state.errors.length) {
             this.setState({
-                errors:[]
+                errors: []
             });
         }
     }
@@ -86,11 +86,11 @@ class JokesListContainer extends Component {
 
         return (
             <div className="jokes-list col-12">
-                { errors.length > 0 && <div className="row mb-2 justify-content-center">
+                {errors.length > 0 && <div className="row mb-2 justify-content-center">
                     <div className="col-6">
                         <div className="error-box">
                             {
-                                errors.map((message,index) => {
+                                errors.map((message, index) => {
                                     return <h4 key={index}>{message}</h4>
                                 })
                             }
@@ -115,20 +115,24 @@ class JokesListContainer extends Component {
                         items.length > 0 && items.map((item) => {
                             return <li className="list__item" key={item.id}>
                                 <div dangerouslySetInnerHTML={{
-                                    '__html':item.joke
+                                    '__html': item.joke
                                 }}></div>
                                 <div className="list-item__actions">
                                     {
-                                        item.canBeFavoured && <button className="button button--icon-only" title="Add to favourite list" onClick={() => {
-                                            this.onAddToFavouriteList(item);
-                                        }}>
+                                        item.canBeFavoured &&
+                                        <button className="button button--icon-only" title="Add to favourite list"
+                                                onClick={() => {
+                                                    this.onAddToFavouriteList(item);
+                                                }}>
                                             <i className="fas fa-star"></i>
                                         </button>
                                     }
                                     {
-                                        item.isFavourite && <button className="button button--icon-only" title="Remove from favourites" onClick={() => {
-                                            this.onRemoveFromFavourites(item);
-                                        }}>
+                                        item.isFavourite &&
+                                        <button className="button button--icon-only" title="Remove from favourites"
+                                                onClick={() => {
+                                                    this.onRemoveFromFavourites(item);
+                                                }}>
                                             <i className="fas fa-trash-alt"></i>
                                         </button>
                                     }
@@ -152,12 +156,12 @@ JokesListContainer.propTypes = {
 };
 
 JokesListContainer.defaultProps = {
-    items:[],
-    isFetching:false
+    items: [],
+    isFetching: false
 };
 
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
     return {
         items: jokesSelector(state),
         isFetching: state.jokes.isFetching

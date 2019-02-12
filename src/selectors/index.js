@@ -1,15 +1,15 @@
-import {createSelector} from "reselect";
-import {MAX_JOKES} from "../constants";
+import { createSelector } from "reselect";
+import { MAX_JOKES } from "../constants";
 
 const jokesSelector = createSelector(
     (state) => state.jokes.jokes,
-    (state) => state.jokes.favouriteJokes.reduce((acc,{id}) => {
+    (state) => state.jokes.favouriteJokes.reduce((acc, {id}) => {
         acc[id] = true;
         return acc;
-    },{}),
-    (randomJokes,favouriteJokeIds) =>{
+    }, {}),
+    (randomJokes, favouriteJokeIds) => {
         const favouriteJokesLength = Object.keys(favouriteJokeIds).length;
-        return randomJokes.map(({id,joke}) => {
+        return randomJokes.map(({id, joke}) => {
 
             const isFavourite = !!favouriteJokeIds[id];
 

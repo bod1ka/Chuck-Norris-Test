@@ -9,19 +9,19 @@ import {
 } from "../constants";
 
 const initialState = {
-    isFetching:false,
-    favouriteJokes:[],
-    jokes:[]
+    isFetching: false,
+    favouriteJokes: [],
+    jokes: []
 };
 
-export default function jokesReducer(state = initialState, action){
+export default function jokesReducer(state = initialState, action) {
 
     switch (action.type) {
         case ADD_FAVOURITE_JOKE:
 
             const favouriteItems = state.favouriteJokes;
 
-            if (favouriteItems.length >= MAX_JOKES){
+            if (favouriteItems.length >= MAX_JOKES) {
                 return state;
             }
 
@@ -40,41 +40,41 @@ export default function jokesReducer(state = initialState, action){
         case FETCH_JOKES_START:
             return {
                 ...state,
-                isFetching:true
+                isFetching: true
             };
         case FETCH_JOKES_FAIL:
             return {
                 ...state,
-                isFetching:false
+                isFetching: false
             };
         case FETCH_JOKES_SUCCESS:
             return {
                 ...state,
-                isFetching:false,
+                isFetching: false,
                 jokes: action.jokes
             };
         case FETCH_FAVOURITE_START:
             return {
                 ...state,
-                isFetching:true
+                isFetching: true
             };
         case FETCH_FAVOURITE_FAIL:
             return {
                 ...state,
-                isFetching:false
+                isFetching: false
             };
         case FETCH_FAVOURITE_SUCCESS:
 
             const favouriteJokes = state.favouriteJokes;
 
-            if (favouriteJokes.length >= MAX_JOKES){
+            if (favouriteJokes.length >= MAX_JOKES) {
                 return state;
             }
 
             return {
                 ...state,
-                isFetching:false,
-                favouriteJokes:[...favouriteJokes,...action.jokes]
+                isFetching: false,
+                favouriteJokes: [...favouriteJokes, ...action.jokes]
             };
         default:
             return state;

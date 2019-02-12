@@ -1,14 +1,14 @@
-export default function authReducer(state = {isAuthenticated:false}, action){
+export default function authReducer(state = {isAuthenticated: false}, action) {
     switch (action.type) {
         case 'AUTH_SUCCESSFUL':
             return {
                 ...state,
-                isAuthenticated:true
+                isAuthenticated: true
             };
         case 'AUTH_LOGOUT':
             return {
                 ...state,
-                isAuthenticated:false
+                isAuthenticated: false
             };
         default:
             return state;

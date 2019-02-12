@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
-import {getFavouriteJokes, removeFavourite} from "../../actions";
-import {withRouter} from "react-router-dom";
-import {MAX_JOKES} from "../../constants";
+import { getFavouriteJokes, removeFavourite } from "../../actions";
+import { withRouter } from "react-router-dom";
+import { MAX_JOKES } from "../../constants";
 
 const POLLING_INTERVAL = 1000 * 5;
 
 class FavouriteJokesListContainer extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
             timer: undefined,
-            errors:[]
+            errors: []
         };
 
         this.onRemoveFromFavourites = this.onRemoveFromFavourites.bind(this);
@@ -24,23 +24,23 @@ class FavouriteJokesListContainer extends Component {
         this.onShowRandom = this.onShowRandom.bind(this);
     }
 
-    onRemoveFromFavourites(id){
+    onRemoveFromFavourites(id) {
         this.props.dispatch(removeFavourite(id));
     }
 
-    onShowRandom(){
+    onShowRandom() {
         this.props.history.push('/');
     }
 
-    startPolling(){
+    startPolling() {
         this.stopPolling();
 
         this.setState({
-            timer:setInterval(() => {
-                if (this.props.isFetching){
+            timer: setInterval(() => {
+                if (this.props.isFetching) {
                     return;
                 }
-                if (this.props.items.length >= MAX_JOKES){
+                if (this.props.items.length >= MAX_JOKES) {
                     this.stopPolling();
                     return;
                 }
@@ -51,23 +51,23 @@ class FavouriteJokesListContainer extends Component {
                     .catch((error) => {
                         console.error(error);
                         this.setState({
-                            errors:[`Can't fetch jokes`]
+                            errors: [`Can't fetch jokes`]
                         });
 
                         setTimeout(() => {
                             this.setState(() => {
                                 return {
-                                    errors:[]
+                                    errors: []
                                 }
                             });
-                        },1000);
+                        }, 1000);
                     });
-            },POLLING_INTERVAL)
+            }, POLLING_INTERVAL)
         })
     }
 
-    stopPolling(){
-        if (this.state.timer){
+    stopPolling() {
+        if (this.state.timer) {
             clearInterval(this.state.timer);
         }
         this.setState({
@@ -75,8 +75,8 @@ class FavouriteJokesListContainer extends Component {
         });
     }
 
-    togglePolling(){
-        if (this.state.timer){
+    togglePolling() {
+        if (this.state.timer) {
             this.stopPolling();
             return;
         }
@@ -100,11 +100,11 @@ class FavouriteJokesListContainer extends Component {
 
         return (
             <div className="jokes-list col-12">
-                { errors.length > 0 && <div className="row justify-content-center">
+                {errors.length > 0 && <div className="row justify-content-center">
                     <div className="col-6">
                         <div className="error-box">
                             {
-                                errors.map((message,index) => {
+                                errors.map((message, index) => {
                                     return <h4 key={index}>{message}</h4>
                                 })
                             }
@@ -126,16 +126,17 @@ class FavouriteJokesListContainer extends Component {
                 </div>
                 <ul className="list">
                     {
-                        items.length > 0 && items.map(({id,joke}) => {
+                        items.length > 0 && items.map(({id, joke}) => {
                             return <li className="list__item" key={id}>
                                 <div dangerouslySetInnerHTML={{
-                                    '__html':joke
+                                    '__html': joke
                                 }}>
                                 </div>
                                 <div className="list-item__actions">
-                                    <button className="button button--icon-only" title="Remove from favourites" onClick={() => {
-                                        this.onRemoveFromFavourites(id);
-                                    }}>
+                                    <button className="button button--icon-only" title="Remove from favourites"
+                                            onClick={() => {
+                                                this.onRemoveFromFavourites(id);
+                                            }}>
                                         <i className="fas fa-trash-alt"></i>
                                     </button>
                                 </div>
@@ -157,10 +158,10 @@ FavouriteJokesListContainer.propTypes = {
 };
 
 FavouriteJokesListContainer.defaultProps = {
-    items:[]
+    items: []
 };
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
     return {
         items: state.jokes.favouriteJokes
     };

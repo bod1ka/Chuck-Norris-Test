@@ -1,6 +1,6 @@
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import {getFavouriteJokes, getRandomJokes} from "./jokes";
+import { getFavouriteJokes, getRandomJokes } from "./jokes";
 import {
     FETCH_FAVOURITE_FAIL,
     FETCH_FAVOURITE_START,
@@ -13,21 +13,21 @@ import {
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 
-describe('#getRandomJokes',() => {
+describe('#getRandomJokes', () => {
 
     beforeEach(() => {
         fetch.resetMocks()
     });
 
-    it ('should get random jokes',() =>{
+    it('should get random jokes', () => {
         const store = mockStore({
-            auth:{
+            auth: {
                 isAuthenticated: false
             },
-            jokes:{
-                isFetching:false,
-                favouriteJokes:[],
-                jokes:[]
+            jokes: {
+                isFetching: false,
+                favouriteJokes: [],
+                jokes: []
             }
         });
 
@@ -35,31 +35,31 @@ describe('#getRandomJokes',() => {
         const jokesFixture = getJokes(10);
 
         fetch.mockResponseOnce(JSON.stringify({
-                value:jokesFixture
-            }));
+            value: jokesFixture
+        }));
 
 
         return store.dispatch((getRandomJokes()))
             .then(() => {
                 const actions = store.getActions();
                 const expected = [
-                    {type:FETCH_JOKES_START},
-                    {type:FETCH_JOKES_SUCCESS,jokes:jokesFixture}
+                    {type: FETCH_JOKES_START},
+                    {type: FETCH_JOKES_SUCCESS, jokes: jokesFixture}
                 ];
 
                 expect(actions).toEqual(expected);
             });
     });
 
-    it('should fail',() => {
+    it('should fail', () => {
         const store = mockStore({
-            auth:{
+            auth: {
                 isAuthenticated: false
             },
-            jokes:{
-                isFetching:false,
-                favouriteJokes:[],
-                jokes:[]
+            jokes: {
+                isFetching: false,
+                favouriteJokes: [],
+                jokes: []
             }
         });
 
@@ -71,8 +71,8 @@ describe('#getRandomJokes',() => {
             .catch(() => {
                 const actions = store.getActions();
                 const expected = [
-                    {type:FETCH_JOKES_START},
-                    {type:FETCH_JOKES_FAIL}
+                    {type: FETCH_JOKES_START},
+                    {type: FETCH_JOKES_FAIL}
                 ];
 
                 expect(actions).toEqual(expected);
@@ -80,21 +80,21 @@ describe('#getRandomJokes',() => {
     });
 });
 
-describe('#getFavouriteJokes',() => {
+describe('#getFavouriteJokes', () => {
 
     beforeEach(() => {
         fetch.resetMocks()
     });
 
-    it ('should get random jokes',() =>{
+    it('should get random jokes', () => {
         const store = mockStore({
-            auth:{
+            auth: {
                 isAuthenticated: false
             },
-            jokes:{
-                isFetching:false,
-                favouriteJokes:[],
-                jokes:[]
+            jokes: {
+                isFetching: false,
+                favouriteJokes: [],
+                jokes: []
             }
         });
 
@@ -102,7 +102,7 @@ describe('#getFavouriteJokes',() => {
         const jokesFixture = getJokes(1);
 
         fetch.mockResponseOnce(JSON.stringify({
-            value:jokesFixture
+            value: jokesFixture
         }));
 
 
@@ -110,23 +110,23 @@ describe('#getFavouriteJokes',() => {
             .then(() => {
                 const actions = store.getActions();
                 const expected = [
-                    {type:FETCH_FAVOURITE_START},
-                    {type:FETCH_FAVOURITE_SUCCESS,jokes:jokesFixture}
+                    {type: FETCH_FAVOURITE_START},
+                    {type: FETCH_FAVOURITE_SUCCESS, jokes: jokesFixture}
                 ];
 
                 expect(actions).toEqual(expected);
             });
     });
 
-    it('should fail',() => {
+    it('should fail', () => {
         const store = mockStore({
-            auth:{
+            auth: {
                 isAuthenticated: false
             },
-            jokes:{
-                isFetching:false,
-                favouriteJokes:[],
-                jokes:[]
+            jokes: {
+                isFetching: false,
+                favouriteJokes: [],
+                jokes: []
             }
         });
 
@@ -138,8 +138,8 @@ describe('#getFavouriteJokes',() => {
             .catch(() => {
                 const actions = store.getActions();
                 const expected = [
-                    {type:FETCH_FAVOURITE_START},
-                    {type:FETCH_FAVOURITE_FAIL}
+                    {type: FETCH_FAVOURITE_START},
+                    {type: FETCH_FAVOURITE_FAIL}
                 ];
 
                 expect(actions).toEqual(expected);
@@ -148,12 +148,12 @@ describe('#getFavouriteJokes',() => {
 });
 
 
-function getJokes(n){
+function getJokes(n) {
     const jokes = [];
-    for (let i = 0; i < n;i++){
+    for (let i = 0; i < n; i++) {
         jokes.push({
-            id:i+1,
-            joke:`test${i+1}`
+            id: i + 1,
+            joke: `test${i + 1}`
         });
     }
     return jokes;

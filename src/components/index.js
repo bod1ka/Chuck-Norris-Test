@@ -7,10 +7,10 @@ export {
     NotFound
 };
 
-function NotFound(){
+function NotFound() {
     return (<div className="row justify-content-center">
-            <h1>
-                404, try find jokes in another place
-            </h1>
+        <h1>
+            404, try find jokes in another place
+        </h1>
     </div>)
 }
