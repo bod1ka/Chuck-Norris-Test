@@ -27,7 +27,7 @@ export default function jokesReducer(state = initialState, action) {
 
             return {
                 ...state,
-                favouriteJokes: [...favouriteItems, action.joke]
+                favouriteJokes: [...favouriteItems, action.joke].slice(0,10)
             };
         case REMOVE_FAVOURITE_JOKE:
 
@@ -74,7 +74,7 @@ export default function jokesReducer(state = initialState, action) {
             return {
                 ...state,
                 isFetching: false,
-                favouriteJokes: [...favouriteJokes, ...action.jokes]
+                favouriteJokes: [...favouriteJokes, ...action.jokes].slice(0,10)
             };
         default:
             return state;

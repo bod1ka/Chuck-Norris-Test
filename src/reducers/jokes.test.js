@@ -1,5 +1,5 @@
 import jokes from './jokes';
-import { ADD_FAVOURITE_JOKE, REMOVE_FAVOURITE_JOKE } from '../constants';
+import { ADD_FAVOURITE_JOKE, FETCH_FAVOURITE_SUCCESS, REMOVE_FAVOURITE_JOKE } from '../constants';
 
 
 describe('jokes reducer', function () {
@@ -57,7 +57,7 @@ describe('jokes reducer', function () {
         expect(state.favouriteJokes).toEqual(jokesFixture);
     });
 
-    it('on REMOVE_FAVOURITE action', () => {
+    it('should remove item on REMOVE_FAVOURITE action', () => {
         const initialState = {
             isFetching: false,
             jokes: [],
@@ -76,6 +76,35 @@ describe('jokes reducer', function () {
         expect(state.favouriteJokes).toEqual([]);
     });
 
+    it('should handle FETCH_FAVOURITE_SUCCESS',() => {
+
+        const jokesFixture =  [
+            {
+                id: 1,
+                joke: 'test'
+            }
+        ];
+
+        const initialState = {
+            isFetching: false,
+            jokes: [],
+            favouriteJokes: jokesFixture
+        };
+
+        const newJokes =  [{
+            type: FETCH_FAVOURITE_SUCCESS,
+            id: 2
+        }];
+
+        const expected = jokesFixture.concat(newJokes);
+
+        const state = jokes(initialState, {
+            type:FETCH_FAVOURITE_SUCCESS,
+            jokes:newJokes
+        });
+
+        expect(state.favouriteJokes).toEqual(expected);
+    });
 });
 
 function getJokes(n) {
