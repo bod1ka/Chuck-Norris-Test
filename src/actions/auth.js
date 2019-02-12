@@ -1,3 +1,5 @@
+import history from '../history';
+
 export function authenticate({login,password}){
     return (dispatch) => {
         dispatch({
@@ -11,5 +13,6 @@ export function logout(){
         dispatch({
             type:'AUTH_LOGOUT'
         });
+        history.push('/');
     }
 }

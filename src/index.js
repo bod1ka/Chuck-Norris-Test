@@ -10,6 +10,7 @@ import * as serviceWorker from './serviceWorker';
 import configureStore from "./store";
 import {Provider} from "react-redux";
 import {Route, BrowserRouter as Router, Switch} from "react-router-dom";
+import history from './history';
 
 import {NotFound} from "./components";
 import {JokesListContainer, FavouriteJokesListContainer} from "./containers";
@@ -24,7 +25,7 @@ trackStoreState(store);
 
 ReactDOM.render(
     <Provider store={store}>
-        <Router>
+        <Router history={history}>
             <Switch>
                 <App>
                     <Switch>
